@@ -78,7 +78,7 @@ public class SecuritySamlWebFilterConfiguration implements ApplicationContextAwa
 		
 		// Ajax Login
 		if(bizProperties.isLoginAjax()) {
-			AjaxAwareAuthenticationSuccessHandler successHandler = new AjaxAwareAuthenticationSuccessHandler(mapper, jwtProperties);
+			HttpServletRequestAuthenticationSuccessHandler successHandler = new HttpServletRequestAuthenticationSuccessHandler(mapper, jwtProperties);
 			return successHandler;
 		}
 		// Form Login
@@ -95,7 +95,7 @@ public class SecuritySamlWebFilterConfiguration implements ApplicationContextAwa
 	public AuthenticationFailureHandler failureHandler() {
 		// Ajax Login
 		if(bizProperties.isLoginAjax()) {
-			return new AjaxAwareAuthenticationFailureHandler(bizProperties.getFailureUrl());
+			return new HttpServletRequestAuthenticationFailureHandler(bizProperties.getFailureUrl());
 		}
 		// Form Login
 		else {
@@ -128,7 +128,7 @@ public class SecuritySamlWebFilterConfiguration implements ApplicationContextAwa
     
     @Bean
 	@ConditionalOnMissingBean
-	public AjaxAwareLoginProcessingFilter jwtAjaxLoginProcessingFilter(AuthenticationFailureHandler failureHandler,
+	public HttpServletRequestLoginProcessingFilter jwtAjaxLoginProcessingFilter(AuthenticationFailureHandler failureHandler,
 			AuthenticationManager authenticationManager, ApplicationEventPublisher publisher,
 			AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource,
 			AuthenticationSuccessHandler successHandler, RememberMeServices rememberMeServices,
