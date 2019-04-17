@@ -371,21 +371,28 @@
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-surefire-plugin.vertsion>2.22.1</maven-surefire-plugin.vertsion>
 		<maven-nexus-staging-plugin.version>1.6.8</maven-nexus-staging-plugin.version>
-		<security-biz.version>1.0.0-SNAPSHOT</security-biz.version>
+		<spring-security-biz.version>1.0.0-SNAPSHOT</spring-security-biz.version>
+		<spring-security-saml2.version>1.0.9.RELEASE</spring-security-saml2.version>
+		<spring-security-saml-dsl.version>1.0.5.RELEASE</spring-security-saml-dsl.version>
 	</properties>
 	
 	<dependencyManagement>
 		<dependencies>
-			
+			<!-- https://github.com/vindell/spring-boot-starter-security-biz -->
+			<dependency>
+				<groupId>com.github.vindell</groupId>
+				<artifactId>spring-boot-starter-security-biz</artifactId>
+				<version>${spring-security-biz.version}</version>
+			</dependency>
 			<dependency>
 			    <groupId>org.springframework.security.extensions</groupId>
 			    <artifactId>spring-security-saml2-core</artifactId>
-			    <version>1.0.4.RELEASE</version>
+			    <version>${spring-security-saml2.version}</version>
 			</dependency>
 			<dependency>
 			    <groupId>org.springframework.security.extensions</groupId>
 			    <artifactId>spring-security-saml-dsl-core</artifactId>
-			    <version>1.0.5.RELEASE</version>
+			    <version>${spring-security-saml-dsl.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -446,11 +453,9 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 	 
-		<!-- https://github.com/vindell/spring-boot-starter-security-biz -->
 		<dependency>
 			<groupId>com.github.vindell</groupId>
 			<artifactId>spring-boot-starter-security-biz</artifactId>
-			<version>${security-biz.version}</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.springframework.security.extensions</groupId>
