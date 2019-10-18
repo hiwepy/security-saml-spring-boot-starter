@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEventPublisher;
@@ -279,30 +280,30 @@ public class SecuritySamlWebFilterConfiguration implements ApplicationContextAwa
 	
 	@Bean
 	@ConditionalOnMissingBean
-	public AbstractAuthenticationProcessingFilter authenticationFilter(AuthenticationFailureHandler failureHandler,
+	public AbstractAuthenticationProcessingFilter authenticationProcessingFilter(AuthenticationFailureHandler authenticationFailureHandler,
 			AuthenticationManager authenticationManager, ApplicationEventPublisher publisher,
 			AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource,
-			AuthenticationSuccessHandler successHandler, RememberMeServices rememberMeServices,
+			AuthenticationSuccessHandler authenticationSuccessHandler, RememberMeServices rememberMeServices,
 			SessionAuthenticationStrategy sessionStrategy) {
 
 		UsernamePasswordAuthenticationFilter authenticationFilter = new UsernamePasswordAuthenticationFilter();
 
-		authenticationFilter.setAllowSessionCreation(bizProperties.isAllowSessionCreation());
-		authenticationFilter.setApplicationEventPublisher(publisher);
-		authenticationFilter.setAuthenticationDetailsSource(authenticationDetailsSource);
-		authenticationFilter.setAuthenticationFailureHandler(failureHandler);
-		authenticationFilter.setAuthenticationManager(authenticationManager);
-		authenticationFilter.setAuthenticationSuccessHandler(successHandler);
 		authenticationFilter.setContinueChainBeforeSuccessfulAuthentication(false);
-		if (StringUtils.hasText(bizProperties.getLoginUrlPatterns())) {
-			authenticationFilter.setFilterProcessesUrl(bizProperties.getLoginUrlPatterns());
-		}
-		// authenticationFilter.setMessageSource(messageSource);
-		authenticationFilter.setPasswordParameter(bizProperties.getPasswordParameter());
-		authenticationFilter.setPostOnly(bizProperties.isPostOnly());
-		authenticationFilter.setRememberMeServices(rememberMeServices);
-		authenticationFilter.setSessionAuthenticationStrategy(sessionStrategy);
-		authenticationFilter.setUsernameParameter(bizProperties.getUsernameParameter());
+		
+		/**
+		 * 批量设置参数
+		 */
+		PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
+		
+		map.from(bizProperties.getSessionMgt().isAllowSessionCreation()).to(authenticationFilter::setAllowSessionCreation);
+		map.from(authenticationDetailsSource).to(authenticationFilter::setAuthenticationDetailsSource);
+		
+		map.from(authenticationManager).to(authenticationFilter::setAuthenticationManager);
+		map.from(authenticationFailureHandler).to(authenticationFilter::setAuthenticationFailureHandler);
+		map.from(authenticationSuccessHandler).to(authenticationFilter::setAuthenticationSuccessHandler);
+		map.from("").to(authenticationFilter::setFilterProcessesUrl);
+		map.from(rememberMeServices).to(authenticationFilter::setRememberMeServices);
+		map.from(sessionStrategy).to(authenticationFilter::setSessionAuthenticationStrategy);
 
 		return authenticationFilter;
 	}
@@ -320,7 +321,7 @@ public class SecuritySamlWebFilterConfiguration implements ApplicationContextAwa
 	
 	/**
 	 * 系统登录注销过滤器；默认：org.springframework.security.web.authentication.logout.LogoutFilter
-	 */
+	
 	@Bean
 	@ConditionalOnMissingBean
 	public LogoutFilter logoutFilter() {
@@ -328,7 +329,7 @@ public class SecuritySamlWebFilterConfiguration implements ApplicationContextAwa
 		LogoutFilter logoutFilter = new LogoutFilter(bizProperties.getLoginUrl(), new SecurityContextLogoutHandler());
 		logoutFilter.setFilterProcessesUrl(bizProperties.getLogoutUrlPatterns());
 		return logoutFilter;
-	}
+	} */
 
 	/*@Bean
 	public FilterRegistrationBean<HttpParamsFilter> httpParamsFilter() {
