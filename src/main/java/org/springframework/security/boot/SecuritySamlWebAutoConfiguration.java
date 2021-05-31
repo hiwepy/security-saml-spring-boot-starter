@@ -60,18 +60,6 @@ public class SecuritySamlWebAutoConfiguration extends WebSecurityConfigurerAdapt
     private AuthenticationManager authenticationManager;
     
     @Bean
-	@ConditionalOnMissingBean
-    public InvalidSessionStrategy invalidSessionStrategy(){
-		return new SimpleRedirectInvalidSessionStrategy(bizProperties.getAuthc().getRedirectUrl());
-	}
-    
-    @Bean
-	@ConditionalOnMissingBean
-    public SessionInformationExpiredStrategy expiredSessionStrategy(){
-		return new SimpleRedirectSessionInformationExpiredStrategy(bizProperties.getSessionMgt().getExpiredUrl());
-	}
-    
-    @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
