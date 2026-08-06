@@ -424,6 +424,7 @@
         <spring-security-biz.version>1.0.9-SNAPSHOT</spring-security-biz.version>
         <spring-security-saml2.version>1.0.9.RELEASE</spring-security-saml2.version>
         <spring-security-saml-dsl.version>1.0.5.RELEASE</spring-security-saml-dsl.version>
+                <slf4j.version>2.0.18</slf4j.version>
     </properties>
     
     <dependencyManagement>
@@ -448,7 +449,18 @@
                 <artifactId>spring-security-saml-dsl-core</artifactId>
                 <version>${spring-security-saml-dsl.version}</version>
             </dependency>
-        </dependencies>
+                <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+</dependencies>
     </dependencyManagement>
     
     <dependencies>
@@ -465,14 +477,14 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.0.13</version>
+            <version>${slf4j.version}</version>
         </dependency>
         
         <!-- For Slf4j Simple -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>2.0.13</version>
+            <version>${slf4j.version}</version>
             <scope>test</scope>
         </dependency>
         
