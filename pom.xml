@@ -598,20 +598,14 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
      
-        <!-- Source: https://github.com/easy-4-java/security-biz-spring-boot-starter — easy4j security-biz-spring-boot-starter -->
+        <!-- For Spring Security -->
         <dependency>
-            <groupId>io.github.easy4j</groupId>
-            <artifactId>security-biz-spring-boot-starter</artifactId>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.security.extensions/spring-security-saml2-core -->
         <dependency>
-            <groupId>org.springframework.security.extensions</groupId>
-            <artifactId>spring-security-saml2-core</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.security.extensions/spring-security-saml-dsl-core -->
-        <dependency>
-            <groupId>org.springframework.security.extensions</groupId>
-            <artifactId>spring-security-saml-dsl-core</artifactId>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
         </dependency>
     </dependencies>
 

@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = SecuritySamlProperties.PREFIX)
 public class SecuritySamlProperties {
 	
-	public static final String PREFIX = "spring.security.ldap";
+	public static final String PREFIX = "spring.security.saml";
 	
 	/**
 	 * Enable Security Ldap.

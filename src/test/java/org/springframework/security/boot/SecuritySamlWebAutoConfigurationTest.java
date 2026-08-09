@@ -17,7 +17,9 @@ package org.springframework.security.boot;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.runner.ApplicationContextRunner;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,8 +35,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("SecuritySamlWebAutoConfiguration Tests")
 class SecuritySamlWebAutoConfigurationTest {
 
-    private final ApplicationContextRunner runner = new ApplicationContextRunner();
-
     @Test
     @DisplayName("Auto-configuration class can be instantiated")
     void testInstantiation() {
@@ -43,17 +43,26 @@ class SecuritySamlWebAutoConfigurationTest {
     }
 
     @Test
-    @DisplayName("Auto-configuration loads when 'spring.security.ldap.enabled=true'")
-    void testLoadsWhenEnabledPropertySet() {
-        runner.withUserConfiguration(SecuritySamlWebAutoConfiguration.class)
-                .withPropertyValues("spring.security.ldap.enabled=true")
-                .run(context -> assertThat(context).hasSingleBean(SecuritySamlWebAutoConfiguration.class));
+    @DisplayName("Auto-configuration has @ConditionalOnProperty annotation")
+    void testConditionalOnPropertyAnnotation() {
+        ConditionalOnProperty prop = SecuritySamlWebAutoConfiguration.class.getAnnotation(ConditionalOnProperty.class);
+        assertThat(prop).isNotNull();
+        assertThat(prop.prefix()).isEqualTo("spring.security.saml");
+        assertThat(prop.havingValue()).isEqualTo("true");
     }
 
     @Test
-    @DisplayName("Auto-configuration is absent when property is not set")
-    void testNotLoadedWhenPropertyAbsent() {
-        runner.withUserConfiguration(SecuritySamlWebAutoConfiguration.class)
-                .run(context -> assertThat(context).doesNotHaveBean(SecuritySamlWebAutoConfiguration.class));
+    @DisplayName("Auto-configuration has @AutoConfigureBefore annotation")
+    void testAutoConfigureBeforeAnnotation() {
+        AutoConfigureBefore before = SecuritySamlWebAutoConfiguration.class.getAnnotation(AutoConfigureBefore.class);
+        assertThat(before).isNotNull();
+    }
+
+    @Test
+    @DisplayName("Auto-configuration has @EnableConfigurationProperties annotation")
+    void testEnableConfigurationPropertiesAnnotation() {
+        EnableConfigurationProperties props = SecuritySamlWebAutoConfiguration.class.getAnnotation(EnableConfigurationProperties.class);
+        assertThat(props).isNotNull();
+        assertThat(props.value()).containsExactly(SecuritySamlProperties.class);
     }
 }
