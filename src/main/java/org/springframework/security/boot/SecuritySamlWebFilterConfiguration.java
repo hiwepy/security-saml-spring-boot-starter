@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Auto-configuration for SAML web filter.
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  */
 @Configuration
 @AutoConfigureBefore(name = {
