@@ -15,6 +15,12 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureBefore(name = {
 	"org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration"
 })
+/**
+ * <p>Configuration properties.</p>
+ *
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
+ * @since 1.0.0
+ */
 @ConditionalOnWebApplication
 @ConditionalOnProperty(prefix = SecuritySamlProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ SecuritySamlProperties.class })

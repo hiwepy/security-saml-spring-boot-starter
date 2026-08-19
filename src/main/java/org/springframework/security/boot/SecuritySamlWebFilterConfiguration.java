@@ -18,6 +18,12 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureBefore(name = {
 	"org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration"
 })
+/**
+ * <p>Configuration properties.</p>
+ *
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
+ * @since 1.0.0
+ */
 @ConditionalOnWebApplication
 @ConditionalOnProperty(prefix = SecuritySamlProperties.PREFIX, value = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ SecuritySamlProperties.class })
@@ -25,11 +31,22 @@ public class SecuritySamlWebFilterConfiguration implements ApplicationContextAwa
 
 	private ApplicationContext applicationContext;
 
+	/**
+	 * Sets the application context.
+	 *
+	 * @param applicationContext the application context
+	 * @throws BeansException if an error occurs
+	 */
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext = applicationContext;
 	}
 
+	/**
+	 * Returns the application context.
+	 *
+	 * @return the application context
+	 */
 	public ApplicationContext getApplicationContext() {
 		return applicationContext;
 	}
